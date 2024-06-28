@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "Job Saver",
+  "version": "1.0",
+  "description": "Saves job postings to Google Sheets",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "http://localhost:5000/",
+    "*://*.bamboohr.com/*",
+    "*://boards.greenhouse.io/*",
+    "*://jobs.lever.co/*",
+    "*://jobs.smartrecruiters.com/*"
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-48.svg",
+    "default_title": "Job Saver",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.bamboohr.com/careers/*",
+        "*://boards.greenhouse.io/*/jobs/*",
+        "*://jobs.lever.co/*/*",
+        "*://jobs.smartrecruiters.com/*/*"
+      ],
+      "js": ["content_scripts/job_script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  }
+}
